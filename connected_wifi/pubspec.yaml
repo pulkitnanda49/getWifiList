@@ -1,10 +1,9 @@
 name: connected_wifi
 description: A new Flutter plugin project.
 version: 0.0.1
-homepage:
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: ">=3.0.3 <4.0.0"
   flutter: ">=3.3.0"
 
 dependencies:
