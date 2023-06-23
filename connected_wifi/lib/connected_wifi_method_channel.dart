@@ -17,8 +17,8 @@ class MethodChannelConnectedWifi extends ConnectedWifiPlatform {
   }
 
   @override
-  Future<List<String>> getWifiList() async {
-    final list = await methodChannel.invokeMethod<List<String>>('getWifiList');
-    return (list ?? []).map((e) => e.toString()).toList();
+  Future<List<Map>> getWifiList() async {
+    final list = await methodChannel.invokeMethod<List<Map>>('getWifiList');
+    return (list ?? []).map((e) => Map.from(e)).toList();
   }
 }

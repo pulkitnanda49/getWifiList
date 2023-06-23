@@ -5,7 +5,7 @@ class ConnectedWifi {
     return ConnectedWifiPlatform.instance.getPlatformVersion();
   }
 
-  Future<List<String>> getWifiList() {
+  Future<List<Map>> getWifiList() {
     return ConnectedWifiPlatform.instance.getWifiList();
   }
 }

@@ -21,8 +21,8 @@ public class ConnectedWifiPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    func getAvailableNetworks() -> [[String: Any]] {
-        var networkList: [[String: Any]] = []
+    func getAvailableNetworks() -> [[String: String]] {
+        var networkList: [[String: String]] = []
 
         if let interfaceNames = CNCopySupportedInterfaces() as NSArray? {
             for interfaceName in interfaceNames {
@@ -30,7 +30,7 @@ public class ConnectedWifiPlugin: NSObject, FlutterPlugin {
                     let networkInfo = CNCopyCurrentNetworkInfo(interfaceName as CFString) as NSDictionary?,
                    let ssid = networkInfo[kCNNetworkInfoKeySSID as String] as? String,
                    let bssid = networkInfo[kCNNetworkInfoKeyBSSID as String] as? String {
-                    let network: [String: Any] = [
+                    let network: [String: String] = [
                         "ssid": ssid,
                         "bssid": bssid,
                         

@@ -27,7 +27,7 @@ abstract class ConnectedWifiPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<List<String>> getWifiList() {
+  Future<List<Map>> getWifiList() {
     throw UnimplementedError(
         'getWifiList() has been implemented only for ios.');
   }
