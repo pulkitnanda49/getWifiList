@@ -56,7 +56,7 @@ func getFrequency(fromBSSID bssid: String) -> Int? {
     // You may need to adjust this based on your actual BSSID format
     // For example, some BSSID formats include the frequency information
     // as the last two characters. Adjust the substring range accordingly.
-    if let frequencySubstring = bssid.suffix(2),
+    if let frequencySubstring = bssid.suffix(2).map(String.init),
         let frequency = Int(frequencySubstring, radix: 16) {
         return frequency
     }
