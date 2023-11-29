@@ -22,45 +22,45 @@ public class ConnectedWifiPlugin: NSObject, FlutterPlugin {
     }
 
     func getAvailableNetworks() -> [[String: String]] {
-        var networkList: [[String: String]] = []
+    var networkList: [[String: String]] = []
 
-        if let interfaceNames = CNCopySupportedInterfaces() as NSArray? {
-            for interfaceName in interfaceNames {
-                if let interfaceName = interfaceName as? String,
-                    let networkInfo = CNCopyCurrentNetworkInfo(interfaceName as CFString) as NSDictionary?,
-                   let ssid = networkInfo[kCNNetworkInfoKeySSID as String] as? String,
-                   let bssid = networkInfo[kCNNetworkInfoKeyBSSID as String] as? String,
-                   let frequency = getFrequency(for: interfaceName) {
-                    
-                    // Check if the frequency is 2.4GHz
-                    if frequency <= 2500 {
-                        let network: [String: String] = [
-                            "ssid": ssid,
-                            "bssid": bssid,
-                            "frequency": "\(frequency) MHz"
-                        ]
-                        print("network \(network)")
-                        networkList.append(network)
-                    }
-                }
-                   
-            }
-        }
+    if let interfaceNames = CNCopySupportedInterfaces() as NSArray? {
+        for interfaceName in interfaceNames {
+            if let interfaceName = interfaceName as? String,
+                let networkInfo = CNCopyCurrentNetworkInfo(interfaceName as CFString) as NSDictionary?,
+                let ssid = networkInfo[kCNNetworkInfoKeySSID as String] as? String,
+                let bssid = networkInfo[kCNNetworkInfoKeyBSSID as String] as? String,
+                let frequency = getFrequency(fromBSSID: bssid) {
 
-        return networkList
-    }
+                // Check if the frequency is 2.4GHz
+                if frequency <= 2500 {
+                    let network: [String: String] = [
+                        "ssid": ssid,
+                        "bssid": bssid,
+                        "frequency": "\(frequency) MHz"
+                    ]
+                    print("network \(network)")
 
-    // Helper function to get the frequency of the connected network
-    func getFrequency(for interfaceName: String) -> Int? {
-        if let supportedInterfaces = CNCopySupportedInterfaces() as? [String] {
-            if supportedInterfaces.contains(interfaceName) {
-                if let interface = CNCopyCurrentNetworkInfo(interfaceName as CFString) as NSDictionary?,
-                    let info = interface[kCNNetworkInfoKeySSID as String] as? [AnyHashable: Any],
-                    let frequency = info[kCNNetworkInfoKeyFrequency as String] as? NSNumber {
-                    return frequency.intValue
+                    networkList.append(network)
                 }
             }
         }
-        return nil
     }
+
+    return networkList
+}
+
+// Helper function to extract frequency from BSSID
+func getFrequency(fromBSSID bssid: String) -> Int? {
+    // Assuming that the frequency is included in the BSSID string
+    // You may need to adjust this based on your actual BSSID format
+    // For example, some BSSID formats include the frequency information
+    // as the last two characters. Adjust the substring range accordingly.
+    if let frequencySubstring = bssid.suffix(2),
+        let frequency = Int(frequencySubstring, radix: 16) {
+        return frequency
+    }
+    return nil
+}
+
 }
