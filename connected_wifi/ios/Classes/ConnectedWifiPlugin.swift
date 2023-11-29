@@ -33,7 +33,7 @@ public class ConnectedWifiPlugin: NSObject, FlutterPlugin {
                 let frequency = getFrequency(fromBSSID: bssid) {
 
                 // Check if the frequency is 2.4GHz
-                if frequency <= 2500 {
+                if frequency <= 2.5 {
                     let network: [String: String] = [
                         "ssid": ssid,
                         "bssid": bssid,
